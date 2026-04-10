@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Ziad 💗</title>
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  text-align:center;
+  background:#ffe6f0;
+  overflow:hidden;
+}
+
+button{
+  padding:10px 20px;
+  margin:10px;
+  border:none;
+  border-radius:20px;
+  background:#ff4d88;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.hidden{display:none;}
+
+.box{
+  margin-top:60px;
+}
+
+#result p{
+  font-size:18px;
+  margin:8px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- البداية -->
+<div id="start" class="box">
+  <h2>Do you love me? 😏</h2>
+  <button id="yesStart">Yes 💗</button>
+  <button id="noStart">No 💔</button>
+</div>
+
+<!-- أول NO -->
+<div id="sad" class="hidden box">
+  <h2>يعني انت مش مهتملي؟ 😢</h2>
+  <img src="YOUR_TWILIGHT.gif" width="200"><br>
+  <button onclick="restart()">جرب تاني</button>
+</div>
+
+<!-- intro -->
+<div id="intro" class="hidden box">
+  <h2>كنت عارفة انك بتحبني 😏<br>كده كده غصب عنك🙄</h2>
+  <button id="openSecret">🤫</button>
+</div>
+
+<!-- secret -->
+<div id="secret" class="hidden box">
+  <h2>عايز تعرف سر خطير؟</h2>
+  <button id="yesSecret">Yes</button>
+  <button id="noSecret">No</button>
+  <p id="secretMsg"></p>
+</div>
+
+<!-- music -->
+<div id="musicBox" class="hidden box">
+  <h2>reminds me of US !! 💗</h2>
+  <img src="YOUR_IMAGE.jpg" width="200"><br>
+
+  <audio controls>
+    <source src="YOUR_SONG.mp3" type="audio/mpeg">
+  </audio><br>
+
+  <button id="next1">Next</button>
+</div>
+
+<!-- name -->
+<div id="loveBox" class="hidden box">
+  <h2>who's my loml? 🤍</h2>
+
+  <input type="text" id="nameInput"><br>
+  <button onclick="checkName()">Submit</button>
+
+  <div id="result"></div>
+
+  <button id="next2" class="hidden">Next</button>
+</div>
+
+<!-- game -->
+<div id="gameBox" class="hidden box">
+  <h2>Catch 25 hearts ❤️</h2>
+  <p id="score">0</p>
+</div>
+
+<!-- final -->
+<div id="final" class="hidden box">
+  <h2>u won my heart 💌</h2>
+  <p>
+    I'll be w u 4ever, no matter what, I'M ALL YOURS ⭐
+  </p>
+</div>
+
+<script>
+
+function restart(){
+  location.reload();
+}
+
+/* البداية */
+document.getElementById("yesStart").onclick = ()=>{
+  start.style.display="none";
+  intro.style.display="block";
+}
+
+document.getElementById("noStart").onclick = ()=>{
+  start.style.display="none";
+  sad.style.display="block";
+}
+
+/* فتح السر */
+openSecret.onclick = ()=>{
+  intro.style.display="none";
+  secret.style.display="block";
+}
+
+/* زر yes اللي بيهرب */
+let firstNo = true;
+
+yesSecret.onclick = function(){
+  this.style.position="absolute";
+  this.style.left=Math.random()*80+"%";
+  this.style.top=Math.random()*80+"%";
+}
+
+/* زر no (بدون alerts نهائي) */
+noSecret.onclick = function(){
+
+  if(firstNo){
+    secretMsg.innerHTML = `
+      <p style="font-size:18px;">
+        يعني انت مش مهتملي ؟ 😒💔
+      </p>
+    `;
+    firstNo = false;
+  } else {
+    secret.style.display="none";
+    musicBox.style.display="block";
+  }
+}
+
+/* next */
+next1.onclick = ()=>{
+  musicBox.style.display="none";
+  loveBox.style.display="block";
+}
+
+/* ✨ ظهور الرسالة تدريجي (مش typing) */
+function showLines(lines, container, i=0){
+  if(i < lines.length){
+
+    let p = document.createElement("p");
+    p.style.opacity = "0";
+    p.style.transition = "0.6s";
+    p.innerHTML = lines[i];
+
+    container.appendChild(p);
+
+    setTimeout(()=>{
+      p.style.opacity = "1";
+    },100);
+
+    setTimeout(()=>{
+      showLines(lines, container, i+1);
+    },700);
+
+  } else {
+    next2.style.display="inline-block";
+  }
+}
+
+/* الاسم */
+function checkName(){
+
+  let val = nameInput.value.toLowerCase();
+  let names = ["ziad","zyad","zeyad","zeid","زياد"];
+
+  result.innerHTML = "";
+  next2.style.display="none";
+
+  if(names.includes(val)){
+
+    let msgLines = [
+      "correct ! 💗",
+      "انت مش بس the love of my life،",
+      "انت عالمي كله واكواني والمجرات،",
+      "أنا بعتبرك عالم خاص لوحده بس ملكي أنا وبس،",
+      "ومش هسمح لحد يبقى معايا فيه،",
+      "أنا انانية فيك بس ده من حبي ليك،",
+      "بحبك اوي :( 💌"
+    ];
+
+    showLines(msgLines, result);
+
+  } else {
+    result.innerHTML = "<p>حاول تاني 😒</p>";
+  }
+}
+
+/* next */
+next2.onclick = ()=>{
+  loveBox.style.display="none";
+  gameBox.style.display="block";
+  startGame();
+}
+
+/* اللعبة */
+let score = 0;
+
+function startGame(){
+
+  let interval = setInterval(()=>{
+
+    let heart = document.createElement("div");
+    heart.innerHTML="❤️";
+    heart.style.position="absolute";
+    heart.style.left=Math.random()*90+"%";
+    heart.style.top="0px";
+    heart.style.fontSize="22px";
+
+    document.body.appendChild(heart);
+
+    let fall = setInterval(()=>{
+
+      heart.style.top = (parseInt(heart.style.top)+5)+"px";
+
+      heart.onclick = ()=>{
+        score++;
+        document.getElementById("score").innerText=score;
+        heart.remove();
+
+        if(score>=25){
+          clearInterval(interval);
+          gameBox.style.display="none";
+          final.style.display="block";
+        }
+      }
+
+      if(parseInt(heart.style.top)>600){
+        heart.remove();
+        clearInterval(fall);
+      }
+
+    },50);
+
+  },700);
+}
+
+</script>
+
+</body>
+</html>
