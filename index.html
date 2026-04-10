@@ -41,21 +41,21 @@ button{
 
 <!-- البداية -->
 <div id="start" class="box">
-  <h2>Do you love me? 😏</h2>
+  <h2>Do you love me? 🌚</h2>
   <button id="yesStart">Yes 💗</button>
   <button id="noStart">No 💔</button>
 </div>
 
 <!-- أول NO -->
 <div id="sad" class="hidden box">
-  <h2>يعني انت مش مهتملي؟ 😢</h2>
-  <img src="YOUR_TWILIGHT.gif" width="200"><br>
-  <button onclick="restart()">جرب تاني</button>
+  <h2>يعني انت مش مهتملي ؟ 😞</h2>
+  <img src="704b6fbbcf4b2803c822a0aa7f798f54 (2).gif" width="200"><br>
+  <button onclick="location.reload()">جرب تاني</button>
 </div>
 
 <!-- intro -->
 <div id="intro" class="hidden box">
-  <h2>كنت عارفة انك بتحبني 😏<br>كده كده غصب عنك🙄</h2>
+  <h2>كنت عارفة انك بتحبني 😭<br>كده كده غصب عنك🙄</h2>
   <button id="openSecret">🤫</button>
 </div>
 
@@ -70,10 +70,11 @@ button{
 <!-- music -->
 <div id="musicBox" class="hidden box">
   <h2>reminds me of US !! 💗</h2>
-  <img src="YOUR_IMAGE.jpg" width="200"><br>
+
+  <img src="9f8fc3cb59e1b693c1ff42d9ee498b31.jpg" width="200"><br>
 
   <audio controls>
-    <source src="YOUR_SONG.mp3" type="audio/mpeg">
+    <source src="HIM - Join Me In Death.mp3" type="audio/mpeg">
   </audio><br>
 
   <button id="next1">Next</button>
@@ -137,13 +138,13 @@ yesSecret.onclick = function(){
   this.style.top=Math.random()*80+"%";
 }
 
-/* زر no (بدون alerts نهائي) */
+/* زر no */
 noSecret.onclick = function(){
 
   if(firstNo){
     secretMsg.innerHTML = `
       <p style="font-size:18px;">
-        يعني انت مش مهتملي ؟ 😒💔
+        يعني انت مش مهتملي ؟ 🙄🙄
       </p>
     `;
     firstNo = false;
@@ -159,7 +160,7 @@ next1.onclick = ()=>{
   loveBox.style.display="block";
 }
 
-/* ✨ ظهور الرسالة تدريجي (مش typing) */
+/* ظهور الرسالة تدريجي */
 function showLines(lines, container, i=0){
   if(i < lines.length){
 
@@ -207,7 +208,7 @@ function checkName(){
     showLines(msgLines, result);
 
   } else {
-    result.innerHTML = "<p>حاول تاني 😒</p>";
+    result.innerHTML = "<p>حاول تاني 🫩</p>";
   }
 }
 
