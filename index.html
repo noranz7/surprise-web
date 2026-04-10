@@ -132,26 +132,29 @@ openSecret.onclick = ()=>{
 /* زر yes اللي بيهرب */
 let firstNo = true;
 
-yesSecret.onclick = function(){
-  this.style.position="absolute";
-  this.style.left=Math.random()*80+"%";
-  this.style.top=Math.random()*80+"%";
-}
-
-/* زر no */
+/* NO logic (UPDATED) */
 noSecret.onclick = function(){
 
   if(firstNo){
     secretMsg.innerHTML = `
       <p style="font-size:18px;">
-        يعني انت مش مهتملي ؟ 🙄🙄
+        يعني انت مش مهتملي ؟ 🙄🙄<br>
+        جرب تاني 😏
       </p>
     `;
     firstNo = false;
-  } else {
-    secret.style.display="none";
-    musicBox.style.display="block";
+    return;
   }
+
+  secret.style.display="none";
+  musicBox.style.display="block";
+}
+
+/* yes secret (يهرب) */
+yesSecret.onclick = function(){
+  this.style.position="absolute";
+  this.style.left=Math.random()*80+"%";
+  this.style.top=Math.random()*80+"%";
 }
 
 /* next */
@@ -171,13 +174,9 @@ function showLines(lines, container, i=0){
 
     container.appendChild(p);
 
-    setTimeout(()=>{
-      p.style.opacity = "1";
-    },100);
+    setTimeout(()=> p.style.opacity = "1",100);
 
-    setTimeout(()=>{
-      showLines(lines, container, i+1);
-    },700);
+    setTimeout(()=> showLines(lines, container, i+1),700);
 
   } else {
     next2.style.display="inline-block";
@@ -219,7 +218,7 @@ next2.onclick = ()=>{
   startGame();
 }
 
-/* اللعبة */
+/* اللعبة (FIXED CLICK HEARTS) */
 let score = 0;
 
 function startGame(){
@@ -228,10 +227,13 @@ function startGame(){
 
     let heart = document.createElement("div");
     heart.innerHTML="❤️";
+
     heart.style.position="absolute";
     heart.style.left=Math.random()*90+"%";
     heart.style.top="0px";
     heart.style.fontSize="22px";
+    heart.style.zIndex="9999";
+    heart.style.cursor="pointer";
 
     document.body.appendChild(heart);
 
@@ -239,7 +241,8 @@ function startGame(){
 
       heart.style.top = (parseInt(heart.style.top)+5)+"px";
 
-      heart.onclick = ()=>{
+      /* FIXED CLICK */
+      heart.onmousedown = ()=>{
         score++;
         document.getElementById("score").innerText=score;
         heart.remove();
