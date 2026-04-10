@@ -39,27 +39,27 @@ button{
 
 <body>
 
-<!-- البداية -->
+<!-- START -->
 <div id="start" class="box">
   <h2>Do you love me? 🌚</h2>
   <button id="yesStart">Yes 💗</button>
   <button id="noStart">No 💔</button>
 </div>
 
-<!-- أول NO -->
+<!-- SAD -->
 <div id="sad" class="hidden box">
   <h2>يعني انت مش مهتملي ؟ 😞</h2>
   <img src="704b6fbbcf4b2803c822a0aa7f798f54 (2).gif" width="200"><br>
   <button onclick="location.reload()">جرب تاني</button>
 </div>
 
-<!-- intro -->
+<!-- INTRO -->
 <div id="intro" class="hidden box">
   <h2>كنت عارفة انك بتحبني 😭<br>كده كده غصب عنك🙄</h2>
   <button id="openSecret">🤫</button>
 </div>
 
-<!-- secret -->
+<!-- SECRET -->
 <div id="secret" class="hidden box">
   <h2>عايز تعرف سر خطير؟</h2>
   <button id="yesSecret">Yes</button>
@@ -67,7 +67,7 @@ button{
   <p id="secretMsg"></p>
 </div>
 
-<!-- music -->
+<!-- MUSIC -->
 <div id="musicBox" class="hidden box">
   <h2>reminds me of US !! 💗</h2>
 
@@ -80,7 +80,7 @@ button{
   <button id="next1">Next</button>
 </div>
 
-<!-- name -->
+<!-- NAME -->
 <div id="loveBox" class="hidden box">
   <h2>who's my loml? 🤍</h2>
 
@@ -92,17 +92,23 @@ button{
   <button id="next2" class="hidden">Next</button>
 </div>
 
-<!-- game -->
+<!-- GAME -->
 <div id="gameBox" class="hidden box">
   <h2>Catch 25 hearts ❤️</h2>
   <p id="score">0</p>
 </div>
 
-<!-- final -->
+<!-- FINAL -->
 <div id="final" class="hidden box">
   <h2>u won my heart 💌</h2>
   <p>
-    I'll be w u 4ever, no matter what, I'M ALL YOURS ⭐
+    I'll be w u 4ever, no matter what, I'M ALL YOURS ⭐<br><br>
+
+    انت مش بس the love of my life، انت عالمي كله واكواني والمجرات،  
+    أنا بعتبرك عالم خاص لوحده بس ملكي أنا وبس،  
+    ومش هسمح لحد يبقى معايا فيه،  
+    أنا انانية فيك بس ده من حبي ليك،  
+    بحبك اوي :( 💌
   </p>
 </div>
 
@@ -112,7 +118,7 @@ function restart(){
   location.reload();
 }
 
-/* البداية */
+/* START */
 document.getElementById("yesStart").onclick = ()=>{
   start.style.display="none";
   intro.style.display="block";
@@ -123,26 +129,33 @@ document.getElementById("noStart").onclick = ()=>{
   sad.style.display="block";
 }
 
-/* فتح السر */
+/* SECRET OPEN */
 openSecret.onclick = ()=>{
   intro.style.display="none";
   secret.style.display="block";
 }
 
-/* زر yes اللي بيهرب */
-let firstNo = true;
+/* YES SECRET (هرب) */
+yesSecret.onclick = function(){
+  this.style.position="absolute";
+  this.style.left=Math.random()*80+"%";
+  this.style.top=Math.random()*80+"%";
+}
 
-/* NO logic (UPDATED) */
+/* NO LOGIC (FIXED STATE) */
+let noAttempts = 0;
+
 noSecret.onclick = function(){
 
-  if(firstNo){
-    secretMsg.innerHTML = `
-      <p style="font-size:18px;">
-        يعني انت مش مهتملي ؟ 🙄🙄<br>
-        جرب تاني 😏
-      </p>
-    `;
-    firstNo = false;
+  noAttempts++;
+
+  if(noAttempts === 1){
+    secretMsg.innerHTML = "يعني انت مش مهتملي ؟ 🙄🙄 جرب تاني 😏";
+    return;
+  }
+
+  if(noAttempts === 2){
+    secretMsg.innerHTML = "لسه؟ 😒 طيب آخر مرة…";
     return;
   }
 
@@ -150,21 +163,15 @@ noSecret.onclick = function(){
   musicBox.style.display="block";
 }
 
-/* yes secret (يهرب) */
-yesSecret.onclick = function(){
-  this.style.position="absolute";
-  this.style.left=Math.random()*80+"%";
-  this.style.top=Math.random()*80+"%";
-}
-
-/* next */
+/* NEXT */
 next1.onclick = ()=>{
   musicBox.style.display="none";
   loveBox.style.display="block";
 }
 
-/* ظهور الرسالة تدريجي */
+/* TEXT ANIMATION */
 function showLines(lines, container, i=0){
+
   if(i < lines.length){
 
     let p = document.createElement("p");
@@ -174,7 +181,7 @@ function showLines(lines, container, i=0){
 
     container.appendChild(p);
 
-    setTimeout(()=> p.style.opacity = "1",100);
+    setTimeout(()=> p.style.opacity="1",100);
 
     setTimeout(()=> showLines(lines, container, i+1),700);
 
@@ -183,7 +190,7 @@ function showLines(lines, container, i=0){
   }
 }
 
-/* الاسم */
+/* NAME CHECK */
 function checkName(){
 
   let val = nameInput.value.toLowerCase();
@@ -211,14 +218,14 @@ function checkName(){
   }
 }
 
-/* next */
+/* NEXT */
 next2.onclick = ()=>{
   loveBox.style.display="none";
   gameBox.style.display="block";
   startGame();
 }
 
-/* اللعبة (FIXED CLICK HEARTS) */
+/* HEART GAME FIXED */
 let score = 0;
 
 function startGame(){
@@ -226,35 +233,36 @@ function startGame(){
   let interval = setInterval(()=>{
 
     let heart = document.createElement("div");
-    heart.innerHTML="❤️";
+    heart.innerHTML = "❤️";
 
-    heart.style.position="absolute";
-    heart.style.left=Math.random()*90+"%";
-    heart.style.top="0px";
-    heart.style.fontSize="22px";
-    heart.style.zIndex="9999";
-    heart.style.cursor="pointer";
+    heart.style.position = "absolute";
+    heart.style.left = Math.random()*90 + "%";
+    heart.style.top = "0px";
+    heart.style.fontSize = "22px";
+
+    heart.style.zIndex = "9999";
+    heart.style.cursor = "pointer";
+    heart.style.pointerEvents = "auto";
 
     document.body.appendChild(heart);
 
     let fall = setInterval(()=>{
 
-      heart.style.top = (parseInt(heart.style.top)+5)+"px";
+      heart.style.top = (parseInt(heart.style.top) + 5) + "px";
 
-      /* FIXED CLICK */
       heart.onmousedown = ()=>{
         score++;
-        document.getElementById("score").innerText=score;
+        document.getElementById("score").innerText = score;
         heart.remove();
 
-        if(score>=25){
+        if(score >= 25){
           clearInterval(interval);
           gameBox.style.display="none";
           final.style.display="block";
         }
       }
 
-      if(parseInt(heart.style.top)>600){
+      if(parseInt(heart.style.top) > 600){
         heart.remove();
         clearInterval(fall);
       }
